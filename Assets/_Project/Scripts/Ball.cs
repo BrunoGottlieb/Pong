@@ -10,6 +10,8 @@ namespace _Project.Scripts
     public class Ball : MonoBehaviour
     {
         [Header("References")]
+        [SerializeField] private PlayerAgent leftPlayerAgent;
+        [SerializeField] private PlayerAgent rightPlayerAgent;
         [SerializeField] private Transform _leftPlayer;
         [SerializeField] private Transform _rightPlayer;
         [SerializeField] private TextMeshProUGUI _text;
@@ -51,7 +53,7 @@ namespace _Project.Scripts
 
         private const float _timeToTouch = 7;
         private float _timeSinceLastTouch = _timeToTouch;
-
+        
         private void Awake()
         {
             _boardWidth = _rightPlayer.position.x + 1;
@@ -78,6 +80,9 @@ namespace _Project.Scripts
 
         private void ResetGameState()
         {
+            leftPlayerAgent.EndEpisode();
+            rightPlayerAgent.EndEpisode();
+            
             _timeSinceLastTouch = _timeToTouch;
             transform.position = Vector2.zero;
             _referential = Vector3.zero;
@@ -103,8 +108,16 @@ namespace _Project.Scripts
 
         private void Score()
         {
-            if (transform.position.x > _boardWidth || transform.position.x < - _boardWidth)
+            if (transform.position.x > _boardWidth)
             {
+                leftPlayerAgent.SetReward(1);
+                rightPlayerAgent.SetReward(-1);
+                ResetGameState();
+            }
+            else if (transform.position.x < - _boardWidth)
+            {
+                leftPlayerAgent.SetReward(-1);
+                rightPlayerAgent.SetReward(1);
                 ResetGameState();
             }
         }
