@@ -1,0 +1,30 @@
+{
+    "Pong": {
+        "elo": 1102.2947533772078,
+        "checkpoints": [
+            {
+                "steps": 7700,
+                "file_path": "results\\tp9\\Pong\\Pong-7700.onnx",
+                "reward": -0.9334532374100719,
+                "creation_time": 1659369751.1930423,
+                "auxillary_file_paths": [
+                    "results\\tp9\\Pong\\Pong-7700.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 7700,
+            "file_path": "results\\tp9\\Pong.onnx",
+            "reward": -0.9334532374100719,
+            "creation_time": 1659369751.1930423,
+            "auxillary_file_paths": [
+                "results\\tp9\\Pong\\Pong-7700.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.28.0",
+        "torch_version": "1.7.1+cpu"
+    }
+}

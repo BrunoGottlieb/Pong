@@ -146,6 +146,8 @@ MonoBehaviour:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
   MaxStep: 5000
+  _id: 0
+  _image: {fileID: 7569564736805479481}
   _ball: {fileID: 0}
 --- !u!114 &1978166747260014879
 MonoBehaviour:

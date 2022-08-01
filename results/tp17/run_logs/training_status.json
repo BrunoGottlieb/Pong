@@ -1,0 +1,66 @@
+{
+    "Pong": {
+        "checkpoints": [
+            {
+                "steps": 499952,
+                "file_path": "results\\tp17\\Pong\\Pong-499952.onnx",
+                "reward": 2.2278481012658227,
+                "creation_time": 1659372353.4612627,
+                "auxillary_file_paths": [
+                    "results\\tp17\\Pong\\Pong-499952.pt"
+                ]
+            },
+            {
+                "steps": 999994,
+                "file_path": "results\\tp17\\Pong\\Pong-999994.onnx",
+                "reward": 6.795918367346939,
+                "creation_time": 1659372784.031996,
+                "auxillary_file_paths": [
+                    "results\\tp17\\Pong\\Pong-999994.pt"
+                ]
+            },
+            {
+                "steps": 1499899,
+                "file_path": "results\\tp17\\Pong\\Pong-1499899.onnx",
+                "reward": 4.178571428571429,
+                "creation_time": 1659373225.0677743,
+                "auxillary_file_paths": [
+                    "results\\tp17\\Pong\\Pong-1499899.pt"
+                ]
+            },
+            {
+                "steps": 1999823,
+                "file_path": "results\\tp17\\Pong\\Pong-1999823.onnx",
+                "reward": 4.315789473684211,
+                "creation_time": 1659373651.7504215,
+                "auxillary_file_paths": [
+                    "results\\tp17\\Pong\\Pong-1999823.pt"
+                ]
+            },
+            {
+                "steps": 2190741,
+                "file_path": "results\\tp17\\Pong\\Pong-2190741.onnx",
+                "reward": 2.6153846153846154,
+                "creation_time": 1659373816.7983482,
+                "auxillary_file_paths": [
+                    "results\\tp17\\Pong\\Pong-2190741.pt"
+                ]
+            }
+        ],
+        "elo": 1229.773091684105,
+        "final_checkpoint": {
+            "steps": 2190741,
+            "file_path": "results\\tp17\\Pong.onnx",
+            "reward": 2.6153846153846154,
+            "creation_time": 1659373816.7983482,
+            "auxillary_file_paths": [
+                "results\\tp17\\Pong\\Pong-2190741.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.28.0",
+        "torch_version": "1.7.1+cpu"
+    }
+}
