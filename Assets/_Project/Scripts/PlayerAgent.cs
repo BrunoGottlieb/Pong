@@ -1,4 +1,3 @@
-using System;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
@@ -13,6 +12,29 @@ namespace _Project.Scripts
         private const float _speed = 10;
         private const int _targetDistance = 10;
         private const float _boardHeight = 4;
+
+        private void Awake()
+        {
+            Initialize();
+        }
+
+        private void Initialize()
+        {
+            _ball.OnScore += OnScore;
+            _ball.OnTouch += OnTouch;
+        }
+
+        private void OnTouch()
+        {
+            SetReward(1);
+            EndEpisode();
+        }
+
+        private void OnScore()
+        {
+            SetReward(-1);
+            EndEpisode();
+        }
 
         private void Move(ActionBuffers actionBuffers)
         {
@@ -37,6 +59,11 @@ namespace _Project.Scripts
         private bool IsUnderLimit(float y)
         {
             return y is < _boardHeight and > _boardHeight * -1;
+        }
+
+        public override void OnEpisodeBegin()
+        {
+            _ball.ResetGameState();
         }
 
         public override void CollectObservations(VectorSensor sensor)

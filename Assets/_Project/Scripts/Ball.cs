@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 namespace _Project.Scripts
@@ -10,8 +9,6 @@ namespace _Project.Scripts
     public class Ball : MonoBehaviour
     {
         [Header("References")]
-        [SerializeField] private PlayerAgent leftPlayerAgent;
-        [SerializeField] private PlayerAgent rightPlayerAgent;
         [SerializeField] private Transform _leftPlayer;
         [SerializeField] private Transform _rightPlayer;
         [SerializeField] private TextMeshProUGUI _text;
@@ -29,6 +26,8 @@ namespace _Project.Scripts
 
         private const float _boardHeight = 4.5f;
         private float _boardWidth;
+
+        private Vector2 _ballInitialPos;
         
         private Vector2 PlayerDir => _currentForward == Side.Left ? _leftPlayerDir : _rightPlayerDir;
         private float Speed { get; set; }
@@ -51,12 +50,13 @@ namespace _Project.Scripts
 
         private Coroutine _coroutine = null;
 
-        private const float _timeToTouch = 7;
-        private float _timeSinceLastTouch = _timeToTouch;
-        
+        public Action OnTouch;
+        public Action OnScore;
+
         private void Awake()
         {
             _boardWidth = _rightPlayer.position.x + 1;
+            _ballInitialPos = transform.position;
             ResetGameState();
         }
 
@@ -69,25 +69,13 @@ namespace _Project.Scripts
             WallCollision();
             Move();
             Score();
-
-            if (Input.GetKeyDown(KeyCode.R))
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-
-            _timeSinceLastTouch -= Time.deltaTime;
-            if(_timeSinceLastTouch <= 0)
-                ResetGameState();
         }
 
-        private void ResetGameState()
+        public void ResetGameState()
         {
-            leftPlayerAgent.EndEpisode();
-            rightPlayerAgent.EndEpisode();
-            
-            _timeSinceLastTouch = _timeToTouch;
-            transform.position = Vector2.zero;
+            Speed = 0;
+            transform.position = _ballInitialPos;
             _referential = Vector3.zero;
-            _currentForward = Side.Left;
-            _lastWallCollided = Wall.None;
             if(_coroutine != null) StopCoroutine(_coroutine);
             _coroutine = StartCoroutine(ThrowBall());
         }
@@ -95,6 +83,8 @@ namespace _Project.Scripts
         IEnumerator ThrowBall()
         {
             yield return new WaitForSeconds(1);
+            _currentForward = Side.Left;
+            _lastWallCollided = Wall.None;
             _referential = new Vector2(-10, Random.Range(-3, 3)) * 100;
             Speed = _speed / 2;
         }
@@ -110,15 +100,10 @@ namespace _Project.Scripts
         {
             if (transform.position.x > _boardWidth)
             {
-                leftPlayerAgent.SetReward(1);
-                rightPlayerAgent.SetReward(-1);
-                ResetGameState();
+                OnScore?.Invoke();
             }
             else if (transform.position.x < - _boardWidth)
             {
-                leftPlayerAgent.SetReward(-1);
-                rightPlayerAgent.SetReward(1);
-                ResetGameState();
             }
         }
 
@@ -148,19 +133,25 @@ namespace _Project.Scripts
 
         private void ToggleReferentialY()
         {
-            _referential = new Vector2(_referential.x, - _referential.y);
+            _referential = new Vector2(_referential.x + (_referential.x - transform.position.x), - _referential.y);
         }
 
         private void PlayerCollision()
         {
+            if (Speed == 0)
+                return;
+            
             if (IsUnderXLimit() && IsUnderYLimit())
             {
                 _text.color = Color.green;
                 SetReferential(PlayerDir);
-                ToggleSide();
                 _lastWallCollided = Wall.None;
                 Speed = _speed;
-                _timeSinceLastTouch = _timeToTouch;
+                
+                if(_currentForward == Side.Right)
+                    OnTouch?.Invoke();
+                
+                ToggleSide();
             }
             else _text.color = Color.white;
         }
@@ -172,7 +163,10 @@ namespace _Project.Scripts
         
         private bool IsUnderYLimit()
         {
-            return PlayerDir.y <= _playerY && PlayerDir.y > -_playerY;
+            if(_currentForward == Side.Left)
+                return PlayerDir.y <= 4.5f && PlayerDir.y > -4.5f;
+            else
+                return PlayerDir.y <= _playerY && PlayerDir.y > -_playerY;
         }
 
         private void ToggleSide()
@@ -184,7 +178,8 @@ namespace _Project.Scripts
         {
             Vector2 preValue;
             preValue.x = value.x;
-            preValue.y = value.y * 0.5f;
+            preValue.y = value.y / (_currentForward == Side.Left ? 4.5f : 0.9f);
+            preValue.y *= 0.25f;
             _referential = preValue * 100;
         }
     }
