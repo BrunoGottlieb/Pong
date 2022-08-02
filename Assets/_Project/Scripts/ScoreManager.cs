@@ -5,6 +5,7 @@ namespace _Project.Scripts
 {
     public class ScoreManager : MonoBehaviour
     {
+        [SerializeField] private bool _isEnabled;
         [SerializeField] private Ball _ball;
         [SerializeField] private TextMeshProUGUI _leftScoreTMP;
         [SerializeField] private TextMeshProUGUI _rightScoreTMP;
@@ -14,6 +15,8 @@ namespace _Project.Scripts
 
         private void Awake()
         {
+            if (!_isEnabled) return;
+            
             _ball.OnLeftScore += OnLeftScore;
             _ball.OnRightScore += OnRightScore;
         }

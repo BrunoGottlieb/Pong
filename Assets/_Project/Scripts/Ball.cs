@@ -29,7 +29,7 @@ namespace _Project.Scripts
         private const float _playerY = 0.9f;
         private const float _playerX = 0.25f;
 
-        private const float _boardHeight = 4.75f;
+        private const float _boardHeight = 4.5f;
         private float _boardWidth;
 
         private Vector2 _ballInitialPos;
@@ -73,7 +73,7 @@ namespace _Project.Scripts
 
         private void Update()
         {
-            //_text.text = _upWallDir.ToString();
+            //_text.text = _referential.ToString();
 
             CalculateDirections();
             PlayerCollision();
@@ -81,9 +81,12 @@ namespace _Project.Scripts
             Move();
             Score();
             _timeSinceLastTouch -= Time.deltaTime;
-            
-            if(_timeSinceLastTouch <= 0)
+
+            if (_timeSinceLastTouch <= 0)
+            {
+                print("TimeOut: " + _referential.ToString());
                 OnTimeOut?.Invoke();
+            }
         }
 
         public void ResetGameState()
@@ -99,10 +102,14 @@ namespace _Project.Scripts
         IEnumerator ThrowBall()
         {
             yield return new WaitForSeconds(1);
-            _currentForward = Side.Left;
+
+            transform.localPosition =  new Vector2(-7, Random.Range(-4.5f, 4.5f));
+            
+            _currentForward = Side.Right;
             _lastWallCollided = Wall.None;
-            _referential = new Vector2(-10, Random.Range(-3, 3)) * 100;
-            Speed = _speed / 2;
+            //_referential = new Vector2(-10, Random.Range(-3, 3)) * 100;
+            _referential = new Vector2(10, Random.Range(-20f, 20f)) * 100;
+            Speed = _speed;
         }
 
         private void CalculateDirections()
@@ -183,15 +190,12 @@ namespace _Project.Scripts
 
         private bool IsUnderXLimit()
         {
-            return PlayerDir.x <= _playerX && PlayerDir.x > -_playerX;
+            return PlayerDir.x < _playerX && PlayerDir.x > -_playerX;
         }
         
         private bool IsUnderYLimit()
         {
-            /*if(_currentForward == Side.Left)
-                return PlayerDir.y <= 4.5f && PlayerDir.y > -4.5f;
-            else*/
-                return PlayerDir.y <= _playerY && PlayerDir.y > -_playerY;
+            return PlayerDir.y < _playerY && PlayerDir.y > -_playerY;
         }
 
         private void ToggleSide()
@@ -202,9 +206,11 @@ namespace _Project.Scripts
         private void SetReferential(Vector2 value)
         {
             Vector2 preValue;
+            if (value.x >= 0 && value.x < 0.2f) value.x = 0.2f;
+            else if (value.x > -0.2f && value.x < 0) value.x = -0.2f;
             preValue.x = value.x;
-            preValue.y = value.y / (_currentForward == Side.Left ? 4.5f : 0.9f);
-            preValue.y *= 0.25f;
+            preValue.y = value.y / _playerY;
+            preValue.y *= 0.35f;
             _referential = preValue * 1000;
         }
     }

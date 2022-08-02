@@ -9,12 +9,12 @@ namespace _Project.Scripts
     public class PlayerAgent : Agent
     {
         [SerializeField] private int _id;
+        [SerializeField] private float _speed = 10;
         [SerializeField] private SpriteRenderer _image;
         [SerializeField] private Ball _ball;
         
-        private const float _speed = 10;
         private const int _targetDistance = 10;
-        private const float _boardHeight = 4;
+        private const float _boardHeight = 4f;
 
         private Coroutine _blinkRoutine;
 
@@ -41,16 +41,16 @@ namespace _Project.Scripts
 
         private void OnTouch()
         {
-            AddReward(1);
+            SetReward(1f);
             if(_blinkRoutine != null)
                 StopCoroutine(_blinkRoutine);
             _blinkRoutine = StartCoroutine(BlinkColor(Color.green));
-            //EndEpisode();
+            EndEpisode();
         }
 
         private void OnScore()
         {
-            //SetReward(-1);
+            SetReward(-1);
             if(_blinkRoutine != null)
                 StopCoroutine(_blinkRoutine);
             _blinkRoutine = StartCoroutine(BlinkColor(Color.red));
@@ -117,11 +117,11 @@ namespace _Project.Scripts
         {
             var discreteActionsOut = actionsOut.DiscreteActions;
             
-            if (Input.GetKey(KeyCode.UpArrow))
+            if (InputManager.MoveUp())
             {
                 discreteActionsOut[0] = 0;
             }
-            else if (Input.GetKey(KeyCode.DownArrow))
+            else if (InputManager.MoveDown())
             {
                 discreteActionsOut[0] = 1;
             }

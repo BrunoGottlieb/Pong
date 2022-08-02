@@ -2094,6 +2094,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb345955b2a5e5b4e81f6b83faa3d3d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isEnabled: 1
   _ball: {fileID: 401630937}
   _leftScoreTMP: {fileID: 639170556}
   _rightScoreTMP: {fileID: 154038917}
@@ -2497,6 +2498,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 320816965}
     m_Modifications:
+    - target: {fileID: 1978166747260014879, guid: f94fe9c58ee9eb14c90080110f08b884, type: 3}
+      propertyPath: DecisionPeriod
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5477331694784222293, guid: f94fe9c58ee9eb14c90080110f08b884, type: 3}
       propertyPath: _ball
       value: 
@@ -2510,8 +2515,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 401630937}
     - target: {fileID: 6419933726217242616, guid: f94fe9c58ee9eb14c90080110f08b884, type: 3}
+      propertyPath: _speed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6419933726217242616, guid: f94fe9c58ee9eb14c90080110f08b884, type: 3}
       propertyPath: MaxStep
-      value: 50000000
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 7339116339471486658, guid: f94fe9c58ee9eb14c90080110f08b884, type: 3}
       propertyPath: TeamId
@@ -2520,7 +2529,7 @@ PrefabInstance:
     - target: {fileID: 7339116339471486658, guid: f94fe9c58ee9eb14c90080110f08b884, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 643a58c7f82557b4da604969152d39c7, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: 2cc06c28c3f390f4e99f9c1756070ebb, type: 3}
     - target: {fileID: 7339116339471486658, guid: f94fe9c58ee9eb14c90080110f08b884, type: 3}
       propertyPath: m_BehaviorType
       value: 2
@@ -2735,6 +2744,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 320816965}
     m_Modifications:
+    - target: {fileID: 1978166747260014879, guid: f94fe9c58ee9eb14c90080110f08b884, type: 3}
+      propertyPath: DecisionPeriod
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5477331694784222293, guid: f94fe9c58ee9eb14c90080110f08b884, type: 3}
       propertyPath: _ball
       value: 
@@ -2744,8 +2757,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 401630937}
     - target: {fileID: 6419933726217242616, guid: f94fe9c58ee9eb14c90080110f08b884, type: 3}
+      propertyPath: _speed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6419933726217242616, guid: f94fe9c58ee9eb14c90080110f08b884, type: 3}
       propertyPath: MaxStep
-      value: 500000
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 6419933726217242616, guid: f94fe9c58ee9eb14c90080110f08b884, type: 3}
       propertyPath: m_Enabled
