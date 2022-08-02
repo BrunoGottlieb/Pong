@@ -45,7 +45,7 @@ namespace _Project.Scripts
             if(_blinkRoutine != null)
                 StopCoroutine(_blinkRoutine);
             _blinkRoutine = StartCoroutine(BlinkColor(Color.green));
-            EndEpisode();
+            //EndEpisode();
         }
 
         private void OnScore()
@@ -104,13 +104,16 @@ namespace _Project.Scripts
 
         public override void CollectObservations(VectorSensor sensor)
         {
-            sensor.AddObservation(_ball.transform.localPosition);
-            sensor.AddObservation(transform.localPosition);
+            sensor.AddObservation(_ball.transform.localPosition.x);
+            sensor.AddObservation(_ball.transform.localPosition.y);
+            sensor.AddObservation(transform.localPosition - _ball.transform.localPosition);
+            sensor.AddObservation(transform.localPosition.y);
         }
 
         public override void OnActionReceived(ActionBuffers actionBuffers)
         {
             Move(actionBuffers);
+            AddReward(Mathf.Abs(transform.localPosition.y) * -0.0005f);
         }
         
         public override void Heuristic(in ActionBuffers actionsOut)

@@ -13,5 +13,10 @@ namespace _Project.Scripts
         {
             return Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow);
         }
+
+        public static bool Restart()
+        {
+            return Input.GetKeyDown(KeyCode.R);
+        }
     }
 }

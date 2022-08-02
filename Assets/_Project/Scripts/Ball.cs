@@ -63,6 +63,7 @@ namespace _Project.Scripts
         public Action OnLeftScore;
         public Action OnRightScore;
         public Action OnTimeOut;
+        public Action OnWallHit;
 
         private void Awake()
         {
@@ -102,14 +103,17 @@ namespace _Project.Scripts
         IEnumerator ThrowBall()
         {
             yield return new WaitForSeconds(1);
-
-            transform.localPosition =  new Vector2(-7, Random.Range(-4.5f, 4.5f));
+            _currentForward = Side.Left;
+            _lastWallCollided = Wall.None;
+            _referential = new Vector2(-10, Random.Range(-3, 3)) * 100;
+            Speed = _speed / 2;
             
+            /*yield return new WaitForSeconds(1);
             _currentForward = Side.Right;
             _lastWallCollided = Wall.None;
-            //_referential = new Vector2(-10, Random.Range(-3, 3)) * 100;
+            transform.localPosition =  new Vector2(-8, Random.Range(-4.5f, 4.5f));
             _referential = new Vector2(10, Random.Range(-20f, 20f)) * 100;
-            Speed = _speed;
+            Speed = _speed;*/
         }
 
         private void CalculateDirections()
@@ -162,6 +166,7 @@ namespace _Project.Scripts
         private void ToggleReferentialY()
         {
             _referential = new Vector2(_referential.x, - _referential.y);
+            OnWallHit?.Invoke();
             //float dot = Mathf.Clamp(Vector2.Dot(_referential, Vector2.up), -50, 50);
             //_referential = _referential - (2 * dot * Vector2.up);
         }
