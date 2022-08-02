@@ -113,7 +113,7 @@ namespace _Project.Scripts
         public override void OnActionReceived(ActionBuffers actionBuffers)
         {
             Move(actionBuffers);
-            AddReward(Mathf.Abs(transform.localPosition.y) * -0.0005f);
+            AddReward(Mathf.Abs(transform.localPosition.y) * -0.0004f);
         }
         
         public override void Heuristic(in ActionBuffers actionsOut)

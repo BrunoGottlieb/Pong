@@ -18,5 +18,10 @@ namespace _Project.Scripts
         {
             return Input.GetKeyDown(KeyCode.R);
         }
+        
+        public static bool Pause()
+        {
+            return Input.GetKeyDown(KeyCode.P);
+        }
     }
 }
