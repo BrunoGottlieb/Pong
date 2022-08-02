@@ -23,5 +23,10 @@ namespace _Project.Scripts
         {
             return Input.GetKeyDown(KeyCode.P);
         }
+        
+        public static bool Escape()
+        {
+            return Input.GetKeyDown(KeyCode.Escape);
+        }
     }
 }

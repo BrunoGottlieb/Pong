@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -13,7 +12,6 @@ namespace _Project.Scripts
         [SerializeField] private Transform _rightPlayer;
         [SerializeField] private Transform _upWall;
         [SerializeField] private Transform _downWall;
-        [SerializeField] private TextMeshProUGUI _text;
         [SerializeField] private bool _movementEnabled;
         
         [Header("Values")]
@@ -21,8 +19,6 @@ namespace _Project.Scripts
 
         private Vector2 _leftPlayerDir;
         private Vector2 _rightPlayerDir;
-        private Vector2 _upWallDir;
-        private Vector2 _downWallDir;
 
         private Vector2 _referential;
 
@@ -74,13 +70,16 @@ namespace _Project.Scripts
 
         private void Update()
         {
-            //_text.text = _referential.ToString();
-
             CalculateDirections();
             PlayerCollision();
             WallCollision();
             Move();
             Score();
+            TimeOut();
+        }
+
+        private void TimeOut()
+        {
             _timeSinceLastTouch -= Time.deltaTime;
 
             if (_timeSinceLastTouch <= 0)
@@ -121,8 +120,6 @@ namespace _Project.Scripts
             Vector3 pos = transform.localPosition;
             _leftPlayerDir = pos - _leftPlayer.localPosition;
             _rightPlayerDir = pos - _rightPlayer.localPosition;
-            _upWallDir = pos - _upWall.localPosition;
-            _downWallDir = pos - _downWall.localPosition;
         }
 
         private void Score()
@@ -167,8 +164,6 @@ namespace _Project.Scripts
         {
             _referential = new Vector2(_referential.x, - _referential.y);
             OnWallHit?.Invoke();
-            //float dot = Mathf.Clamp(Vector2.Dot(_referential, Vector2.up), -50, 50);
-            //_referential = _referential - (2 * dot * Vector2.up);
         }
 
         private void PlayerCollision()

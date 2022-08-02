@@ -29,6 +29,11 @@ namespace _Project.Scripts
             {
                 TogglePause();
             }
+            
+            if (InputManager.Escape())
+            {
+                SceneManager.LoadScene(ScenesHolder.Menu);
+            }
         }
 
         private void TogglePause()

@@ -3,6 +3,7 @@ using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace _Project.Scripts
 {
@@ -42,27 +43,28 @@ namespace _Project.Scripts
         private void OnTouch()
         {
             SetReward(1f);
-            if(_blinkRoutine != null)
-                StopCoroutine(_blinkRoutine);
-            _blinkRoutine = StartCoroutine(BlinkColor(Color.green));
+            BlinkPad(Color.green);
             //EndEpisode();
         }
 
         private void OnScore()
         {
-            SetReward(-1);
-            if(_blinkRoutine != null)
-                StopCoroutine(_blinkRoutine);
-            _blinkRoutine = StartCoroutine(BlinkColor(Color.red));
+            //SetReward(-1);
+            BlinkPad(Color.red);
             EndEpisode();
         }
 
         private void OnTimeOut()
         {
+            BlinkPad(Color.yellow);
+            EndEpisode();
+        }
+
+        private void BlinkPad(Color color)
+        {
             if(_blinkRoutine != null)
                 StopCoroutine(_blinkRoutine);
-            _blinkRoutine = StartCoroutine(BlinkColor(Color.yellow));
-            EndEpisode();
+            _blinkRoutine = StartCoroutine(BlinkColor(color));
         }
 
         private IEnumerator BlinkColor(Color color)
@@ -106,14 +108,15 @@ namespace _Project.Scripts
         {
             sensor.AddObservation(_ball.transform.localPosition.x);
             sensor.AddObservation(_ball.transform.localPosition.y);
-            sensor.AddObservation(transform.localPosition - _ball.transform.localPosition);
+            if(SceneManager.GetActiveScene().buildIndex == ScenesHolder.Fast)
+                sensor.AddObservation(transform.localPosition - _ball.transform.localPosition);
             sensor.AddObservation(transform.localPosition.y);
         }
 
         public override void OnActionReceived(ActionBuffers actionBuffers)
         {
             Move(actionBuffers);
-            AddReward(Mathf.Abs(transform.localPosition.y) * -0.0004f);
+            //AddReward(Mathf.Abs(transform.localPosition.y) * -0.0004f);
         }
         
         public override void Heuristic(in ActionBuffers actionsOut)
@@ -130,7 +133,7 @@ namespace _Project.Scripts
             }
             else
             {
-                discreteActionsOut[0] = -1;
+                discreteActionsOut[0] = 2;
             }
         }
     }
