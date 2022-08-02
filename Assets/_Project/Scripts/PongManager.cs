@@ -22,6 +22,7 @@ namespace _Project.Scripts
         {
             if (InputManager.Restart())
             {
+                SetPauseState(false);
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
 
@@ -32,6 +33,7 @@ namespace _Project.Scripts
             
             if (InputManager.Escape())
             {
+                SetPauseState(false);
                 SceneManager.LoadScene(ScenesHolder.Menu);
             }
         }

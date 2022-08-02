@@ -6,12 +6,12 @@ namespace _Project.Scripts
     {
         public static bool MoveUp()
         {
-            return Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow);
+            return Input.GetAxis("Vertical") > 0.1f;
         }
     
         public static bool MoveDown()
         {
-            return Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow);
+            return Input.GetAxis("Vertical") < -0.1f;
         }
 
         public static bool Restart()
