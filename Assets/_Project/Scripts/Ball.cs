@@ -68,7 +68,7 @@ namespace _Project.Scripts
             ResetGameState();
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             CalculateDirections();
             PlayerCollision();

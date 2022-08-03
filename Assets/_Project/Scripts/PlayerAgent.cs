@@ -62,9 +62,9 @@ namespace _Project.Scripts
 
         private void BlinkPad(Color color)
         {
-            if(_blinkRoutine != null)
+            /*if(_blinkRoutine != null)
                 StopCoroutine(_blinkRoutine);
-            _blinkRoutine = StartCoroutine(BlinkColor(color));
+            _blinkRoutine = StartCoroutine(BlinkColor(color));*/
         }
 
         private IEnumerator BlinkColor(Color color)

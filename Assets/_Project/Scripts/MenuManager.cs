@@ -20,6 +20,7 @@ namespace _Project.Scripts
 
         private void Initialize()
         {
+            Cursor.visible = true;
             IsLoadingScene = false;
             _loadingMessage.SetActive(false);
             _slowButton.onClick.AddListener(OnSlowButtonClick);

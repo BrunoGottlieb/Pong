@@ -16,6 +16,7 @@ namespace _Project.Scripts
         private void Initialize()
         {
             SetPauseState(false);
+            Cursor.visible = false;
         }
 
         private void Update()
